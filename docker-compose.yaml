@@ -1,0 +1,15 @@
+version: "3"
+services:
+  api: &api
+    build: .
+    volumes:
+      - $PWD:/usr/src/app
+    ports:
+      - 5000:5000
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - C10K_ENV=develop
+    command: python -m server
+  test:
+    <<: *api
+    command: python -Bm pytest -fxqs --color="yes"
